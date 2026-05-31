@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yuta Takaya with Rising Particles</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    overflow:hidden;
+    width:100vw;
+    height:100vh;
+    background:#000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:Arial, sans-serif;
+}
+
+canvas{
+    position:fixed;
+    inset:0;
+}
+
+a{
+    text-decoration:none;
+    z-index:10;
+}
+
+.big-text{
+    font-size:clamp(70px,10vw,170px);
+    font-weight:900;
+    text-transform:uppercase;
+    display:flex;
+    cursor:pointer;
+    transition:.4s;
+}
+
+.big-text:hover{
+    transform:scale(1.08);
+}
+
+.big-text span{
+    color:var(--c);
+    text-shadow:
+        0 0 10px var(--c),
+        0 0 20px var(--c),
+        0 0 40px var(--c),
+        0 0 80px var(--c);
+}
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+
+<a href="https://aithucchien.vinuni.edu.vn/" target="_blank">
+    <div class="big-text" id="title">
+        YUTA TAKAYA
+    </div>
+</a>
+
+<script>
+const title = document.getElementById("title");
+const text = title.innerText;
+title.innerHTML="";
+
+const rainbow = [
+"#ff2d55",
+"#ff5e3a",
+"#ffcc00",
+"#4cff4c",
+"#2cffd6",
+"#35c7ff",
+"#3366ff",
+"#8b5cf6",
+"#ff2d95"
+];
+
+[...text].forEach((ch,i)=>{
+    const span=document.createElement("span");
+
+    if(ch===" "){
+        span.innerHTML="&nbsp;";
+    }else{
+        span.textContent=ch;
+        span.style.setProperty("--c",
+            rainbow[i%rainbow.length]
+        );
+    }
+
+    title.appendChild(span);
+});
+
+const canvas=document.getElementById("bg");
+const ctx=canvas.getContext("2d");
+
+function resize(){
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+}
+resize();
+window.addEventListener("resize",resize);
+
+const colors=[
+"#ff3366",
+"#ff6633",
+"#ffcc33",
+"#66ff66",
+"#33ffff",
+"#3399ff",
+"#6666ff",
+"#aa55ff",
+"#ff33cc",
+"#ffffff"
+];
+
+const particles=[];
+
+for(let i=0;i<180;i++){
+    particles.push({
+        x:Math.random()*canvas.width,
+        y:Math.random()*canvas.height,
+        r:Math.random()*7+2,
+        speed:Math.random()*2+0.3,
+        color:colors[Math.floor(Math.random()*colors.length)]
+    });
+}
+
+function animate(){
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    particles.forEach(p=>{
+
+        p.y -= p.speed;
+
+        if(p.y < -20){
+            p.y = canvas.height + 20;
+            p.x = Math.random()*canvas.width;
+        }
+
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+
+        ctx.fillStyle=p.color;
+        ctx.shadowBlur=20;
+        ctx.shadowColor=p.color;
+        ctx.fill();
+    });
+
+    requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+
+</body>
+</html>
