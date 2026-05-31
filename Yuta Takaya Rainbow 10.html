@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yuta Takaya</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    width:100vw;
+    height:100vh;
+    overflow-y:auto;
+    background:black;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap: 20px;
+    padding: 40px 0;
+    font-family:Arial, sans-serif;
+}
+
+a{
+    text-decoration:none;
+}
+
+.big-text{
+    font-size:60px; /* Reduced slightly so 10 lines fit better vertically */
+    font-weight:900;
+    text-transform:uppercase;
+    text-align:center;
+    cursor:pointer;
+    transition: 0.3s;
+    display: flex;
+    gap: 0.1em;
+}
+
+.big-text span {
+    color: var(--char-color, white);
+    transition: 0.3s;
+    text-shadow:
+        0 0 20px var(--char-color, #00ffff),
+        0 0 40px var(--char-color, #00ffff);
+}
+
+.big-text:hover{
+    transform:scale(1.08);
+}
+
+.big-text:hover span {
+    text-shadow:
+        0 0 30px var(--char-color, #00ffff),
+        0 0 60px var(--char-color, #00ffff),
+        0 0 120px var(--char-color, #00ffff);
+}
+</style>
+</head>
+<body>
+
+<!-- 10 Lines of Yuta Takaya -->
+<a href="https://aithucchien.vinuni.edu.vn/" target="_blank"><div class="big-text rainbow-text">Yuta Takaya</div></a>
+<a href="https://aithucchien.vinuni.edu.vn/" target="_blank"><div class="big-text rainbow-text">Yuta Takaya</div></a>
+<a href="https://aithucchien.vinuni.edu.vn/" target="_blank"><div class="big-text rainbow-text">Yuta Takaya</div></a>
+<a href="https://aithucchien.vinuni.edu.vn/" target="_blank"><div class="big-text rainbow-text">Yuta Takaya</div></a>
+<a href="https://aithucchien.vinuni.edu.vn/" target="_blank"><div class="big-text rainbow-text">Yuta Takaya</div></a>
+<a href="https://aithucchien.vinuni.edu.vn/" target="_blank"><div class="big-text rainbow-text">Yuta Takaya</div></a>
+<a href="https://aithucchien.vinuni.edu.vn/" target="_blank"><div class="big-text rainbow-text">Yuta Takaya</div></a>
+<a href="https://aithucchien.vinuni.edu.vn/" target="_blank"><div class="big-text rainbow-text">Yuta Takaya</div></a>
+<a href="https://aithucchien.vinuni.edu.vn/" target="_blank"><div class="big-text rainbow-text">Yuta Takaya</div></a>
+<a href="https://aithucchien.vinuni.edu.vn/" target="_blank"><div class="big-text rainbow-text">Yuta Takaya</div></a>
+
+<script>
+    // Target all elements with the class instead of a single ID
+    const textContainers = document.querySelectorAll('.rainbow-text');
+    
+    const colors = [
+        '#FF3366', '#FF6633', '#FFCC33', '#33FF66', 
+        '#33FFCC', '#33CCFF', '#3366FF', '#9933FF', 
+        '#FF33CC', '#FF3366', '#FF9933'
+    ];
+
+    textContainers.forEach(container => {
+        const text = container.innerText;
+        container.innerHTML = '';
+
+        [...text].forEach((char, index) => {
+            const span = document.createElement('span');
+            
+            if (char === ' ') {
+                span.innerHTML = '&nbsp;';
+            } else {
+                span.innerText = char;
+                const color = colors[index % colors.length];
+                span.style.setProperty('--char-color', color);
+            }
+            
+            container.appendChild(span);
+        });
+    });
+</script>
+
+</body>
+</html>

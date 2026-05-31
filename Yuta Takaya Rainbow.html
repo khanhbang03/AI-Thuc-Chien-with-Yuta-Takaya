@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yuta Takaya</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    width:100vw;
+    height:100vh;
+    overflow:hidden;
+    background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:Arial, sans-serif;
+}
+
+a{
+    text-decoration:none;
+}
+
+.big-text{
+    font-size:100px;
+    font-weight:900;
+    text-transform:uppercase;
+    text-align:center;
+    cursor:pointer;
+    transition: 0.3s;
+    display: flex;
+    gap: 0.1em; /* Khoảng cách nhỏ giữa các kí tự nếu muốn */
+}
+
+/* Hiệu ứng màu và shadow riêng cho từng kí tự */
+.big-text span {
+    color: var(--char-color, white);
+    transition: 0.3s;
+    text-shadow:
+        0 0 20px var(--char-color, #00ffff),
+        0 0 40px var(--char-color, #00ffff);
+}
+
+/* Khi hover vào toàn bộ chữ, phóng to và tăng độ sáng shadow của từng kí tự */
+.big-text:hover{
+    transform:scale(1.08);
+}
+
+.big-text:hover span {
+    text-shadow:
+        0 0 30px var(--char-color, #00ffff),
+        0 0 60px var(--char-color, #00ffff),
+        0 0 120px var(--char-color, #00ffff);
+}
+</style>
+</head>
+<body>
+
+<a href="https://aithucchien.vinuni.edu.vn/" target="_blank">
+    <div class="big-text" id="rainbow-text">Yuta Takaya</div>
+</a>
+
+<script>
+    const textContainer = document.getElementById('rainbow-text');
+    const text = textContainer.innerText;
+    textContainer.innerHTML = '';
+
+    // Danh sách mã màu rực rỡ phù hợp với nền đen (Neon style)
+    const colors = [
+        '#FF3366', '#FF6633', '#FFCC33', '#33FF66', 
+        '#33FFCC', '#33CCFF', '#3366FF', '#9933FF', 
+        '#FF33CC', '#FF3366', '#FF9933'
+    ];
+
+    // Tự động tách từng kí tự và gán màu tương ứng
+    [...text].forEach((char, index) => {
+        const span = document.createElement('span');
+        
+        // Nếu là dấu cách thì giữ nguyên không đổi màu
+        if (char === ' ') {
+            span.innerHTML = '&nbsp;';
+        } else {
+            span.innerText = char;
+            // Lấy màu từ mảng colors (vòng lặp lại nếu chuỗi dài hơn mảng màu)
+            const color = colors[index % colors.length];
+            span.style.setProperty('--char-color', color);
+        }
+        
+        textContainer.appendChild(span);
+    });
+</script>
+
+</body>
+</html>

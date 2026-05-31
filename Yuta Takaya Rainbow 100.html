@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yuta Takaya 10x10 Optimized</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    width:100vw;
+    min-height:100vh;
+    overflow-y:auto;
+    overflow-x:auto;
+    background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding: 40px;
+    font-family:Arial, sans-serif;
+}
+
+/* 10x10 Grid Container */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(10, auto);
+    gap: 25px 20px;
+    justify-content: center;
+    align-content: center;
+}
+
+a{
+    text-decoration:none;
+}
+
+.big-text{
+    font-size: 20px;
+    font-weight:900;
+    text-transform:uppercase;
+    text-align:center;
+    cursor:pointer;
+    transition: 0.3s;
+    display: flex;
+    gap: 0.05em;
+    white-space: nowrap;
+}
+
+.big-text span {
+    color: var(--char-color, white);
+    transition: 0.3s;
+    text-shadow:
+        0 0 10px var(--char-color, #00ffff),
+        0 0 20px var(--char-color, #00ffff);
+}
+
+.big-text:hover{
+    transform:scale(1.15);
+    z-index: 10;
+}
+
+.big-text:hover span {
+    text-shadow:
+        0 0 20px var(--char-color, #00ffff),
+        0 0 40px var(--char-color, #00ffff),
+        0 0 80px var(--char-color, #00ffff);
+}
+</style>
+</head>
+<body>
+
+<div class="grid-container" id="main-grid"></div>
+
+<script>
+    const grid = document.getElementById('main-grid');
+    const totalItems = 100; // 10 * 10 layout
+    const targetText = "Yuta Takaya";
+    const targetUrl = "https://aithucchien.vinuni.edu.vn/";
+    
+    const colors = [
+        '#FF3366', '#FF6633', '#FFCC33', '#33FF66', 
+        '#33FFCC', '#33CCFF', '#3366FF', '#9933FF', 
+        '#FF33CC', '#FF3366', '#FF9933'
+    ];
+
+    // Create a DocumentFragment to minimize browser repaints/reflows
+    const fragment = document.createDocumentFragment();
+
+    for (let i = 0; i < totalItems; i++) {
+        // 1. Create the anchor link
+        const anchor = document.createElement('a');
+        anchor.href = targetUrl;
+        anchor.target = "_blank";
+
+        // 2. Create the big-text wrapper
+        const wrapper = document.createElement('div');
+        wrapper.className = 'big-text';
+
+        // 3. Populate characters into spans directly
+        [...targetText].forEach((char, index) => {
+            const span = document.createElement('span');
+            if (char === ' ') {
+                span.innerHTML = '&nbsp;';
+            } else {
+                span.innerText = char;
+                const color = colors[index % colors.length];
+                span.style.setProperty('--char-color', color);
+            }
+            wrapper.appendChild(span);
+        });
+
+        // 4. Construct the tree structures
+        anchor.appendChild(wrapper);
+        fragment.appendChild(anchor);
+    }
+
+    // 5. Append everything to the DOM at once
+    grid.appendChild(fragment);
+</script>
+
+</body>
+</html>
